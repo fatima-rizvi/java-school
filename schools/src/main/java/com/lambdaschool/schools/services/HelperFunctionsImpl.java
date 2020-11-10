@@ -14,12 +14,14 @@ public class HelperFunctionsImpl implements HelperFunctions {
 
     @Override
     public List<ValidationError> getConstraintViolations(Throwable cause) {
-        ArrayList<ValidationError> listVE = new ArrayList<>();
+        List<ValidationError> listVE = new ArrayList<>();
         while((cause !=null)
-                && !(cause instanceof ConstraintViolationException)
-        && !(cause instanceof MethodArgumentNotValidException)) {
+            && !(cause instanceof ConstraintViolationException)
+            && !(cause instanceof MethodArgumentNotValidException)) {
             cause = cause.getCause();
+        }
 
+        if(cause != null) {
             if (cause instanceof ConstraintViolationException) {
                 //ConstraintViolationException
                 ConstraintViolationException ex = (ConstraintViolationException) cause;
