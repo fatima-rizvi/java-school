@@ -10,14 +10,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@RestController
+@RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
@@ -48,7 +48,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         errorDetail.setTimestamp(new Date());
         errorDetail.setStatus(status.value());
         errorDetail.setTitle("Rest Internal Exception");
-        errorDetail.setDetails(ex.getMessage());
+        errorDetail.setDetails("Found an issue with school: " + ex.getMessage());
         errorDetail.setDeveloperMessage(ex.getClass().getName());
         errorDetail.setErrors(helperFunctions.getConstraintViolations(ex));
 
